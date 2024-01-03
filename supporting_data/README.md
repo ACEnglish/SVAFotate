@@ -23,6 +23,7 @@ is required for these new gnomAD data. These new SV calls also include
 extra annotations, specifically updated population groups. Accounting for 
 this, a gnomAD v4 BED file has been created, with updated columns as a 
 SVAFotate input source file. I will try integrate these alongside the CCDG, 
-TOPMed, and 1000G SV datasets into a new core SVAFotate input BED, but for 
+TOPMed, and 1000G SV datasets into a new core SVAFotate input BED for the 
+next version of SVAFotate (and properly expand the available populations), but for 
 the time being, I have made the gnomAD calls available in the `gnomad.v4.bed.gz` 
 file and this should be ready to use with SVAFotate.
