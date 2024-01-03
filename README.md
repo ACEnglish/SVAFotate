@@ -142,8 +142,15 @@ CCDG, gnomAD, and 1000G SV callsets. AF related data (including HOM_REF, HET,
 and HOM_ALT genotype counts, where available), were parsed from these into a single BED
 file. CCDG and 1000G data were provided with GRCh38 alignments, but gnomAD data
 was generated using GRCh37 alignments. These have been converted to GRCh38 using
-[UCSC's command-line liftover tool](https://genome.ucsc.edu/cgi-bin/hgLiftOver). A
-different BED file could be used or customized, user-specific data could be added to the
+[UCSC's command-line liftover tool](https://genome.ucsc.edu/cgi-bin/hgLiftOver). The recent 
+gnomAD v4 dataset, inlcudes SV calls derived from GRCh38, and a BED from these SVs has 
+been made available, called:
+
+```
+gnomad.v4.bed.gz
+```
+
+A different BED file could be used or customized, or user-specific data could be added to the
 provided BED file, but please note that SVAFotate expects specific columns, their header
 names, and their order placement to be present in the BED file. If a different BED
 file is used or additional data is added to the provided BED, please ensure that
