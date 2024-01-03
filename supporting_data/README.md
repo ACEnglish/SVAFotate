@@ -15,3 +15,14 @@ AFs can be found in the TOPMed.GRCH38.bed.gz file. This can be
 used as the sole input BED for SVAFotate or it can be combined with the 
 SVAFotate_core_SV_popAFs.GRCh38.bed.gz core BED file for more 
 comprehensive SV annotation.
+
+With the release of gnomAD v4, the list of gnomAD SVs has been updated.
+For more information, please refer to the [gnomAD website](https://gnomad.broadinstitute.org/news/2023-11-v4-structural-variants)
+. Importantly, these SV calls were generated using GRCh38, so no liftover 
+is required for these new gnomAD data. These new SV calls also include 
+extra annotations, specifically updated population groups. Accounting for 
+this, a gnomAD v4 BED file has been created, with updated columns as a 
+SVAFotate input source file. I will try integrate these alongside the CCDG, 
+TOPMed, and 1000G SV datasets into a new core SVAFotate input BED, but for 
+the time being, I have made the gnomAD calls available in the `gnomad.v4.bed.gz` 
+file and this should be ready to use with SVAFotate.
