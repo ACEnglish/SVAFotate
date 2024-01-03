@@ -143,12 +143,16 @@ and HOM_ALT genotype counts, where available), were parsed from these into a sin
 file. CCDG and 1000G data were provided with GRCh38 alignments, but gnomAD data
 was generated using GRCh37 alignments. These have been converted to GRCh38 using
 [UCSC's command-line liftover tool](https://genome.ucsc.edu/cgi-bin/hgLiftOver). The recent 
-gnomAD v4 dataset, inlcudes SV calls derived from GRCh38, and a BED from these SVs has 
+gnomAD v4 dataset inlcudes SV calls derived from GRCh38, and a BED from these SVs has 
 been made available, called:
 
 ```
 gnomad.v4.bed.gz
 ```
+
+This can also be used as an input BED for SVAFotate, but please note that currently the expanded 
+populations have not been fully integrated into SVAFotate so not all annotation options are 
+available. I hope to update this soon for a future SVAFotate version.
 
 A different BED file could be used or customized, or user-specific data could be added to the
 provided BED file, but please note that SVAFotate expects specific columns, their header
