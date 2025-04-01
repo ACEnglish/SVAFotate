@@ -1,3 +1,18 @@
+An updated core BED file is now available that integrates SVs from 
+gnomAD v4.1. The size of this file prevents it from being hosted 
+in this repo, but it can be downloaded from [here](https://zenodo.org/records/11642574). 
+This BED file contains reported SVs from CCDG, gnomAD, 1000G, and TOPMed. 
+Because this version of gnomAD includes new populations, the SV calls 
+from CCDG, 1000G, and TOPMed have been reformatted to account for these 
+additional populations. Please note that 1000G SVs are identified 
+with `ThousG` in this file to better aid downstream use of VCFs 
+annotated by SVAFotate. Since gnomAD v4.1 was aligned to GRCh38, no 
+liftover was required to create this data. Since this file did not 
+require any genomic coordinates liftover, and because it contains more 
+up-to-date SV calls from population datasets, it is recommended that 
+this BED file be used over the older files listed (and described below) 
+in this repo. 
+
 The core BED files provided here are made up of SV calls 
 from CCDG, gnomAD, and 1000G. CCDG and 1000G were called 
 using the GRCh38 reference while the gnomAD calls were 

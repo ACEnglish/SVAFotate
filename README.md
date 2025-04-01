@@ -5,6 +5,9 @@ Structural Variant Allele Frequency annotate or SVAFotate is a tool for
 annotating structural variant VCFs with population level allele frequency
 information and other related metrics.
 
+Please see the [SVAFotate publication](https://doi.org/10.1186/s12859-022-05008-y) 
+for more information and for citing purposes.
+
 Overview
 =========================
 Being able to distinguish whether a mutation or variant is common or
@@ -75,7 +78,7 @@ $ pip install git+https://github.com/fakedrtom/SVAFotate.git
 ```
 $ svafotate --version
 
-svafotate 0.0.1
+svafotate 0.1.0
 ```
 
 Usage
@@ -126,51 +129,34 @@ As stated, this requires an input VCF (`-v`) and output VCF name (`-o`). SVAFota
 developed using SV VCFs derived from the Lumpy SV caller, however it has
 been tested on VCFs created by other SV callers. As long as SVTYPE and END
 (preferably SVLEN as well) are included in the INFO fields, any SV VCF that
-follows expected VCF conventions should be usable with SVAFotate.
+follows expected VCF conventions should be usable with SVAFotate. Please note that a
+unique SV ID (column 3 or the `ID` column of the VCF) is also expected. 
 
 SVAFotate also requires a BED file corresponding to population SV data (`-b`) that you
 wish to compare the SVs in the input VCF against. A BED file with currently available
-large population SV data is provided along with SVAFotate, called:
+large population SV data is available, called:
 
 ```
-SVAFotate_core_SV_popAFs.GRCh38.bed.gz
+SVAFotate_core_SV_popAFs.GRCh38.v4.1.bed.gz
 ```
 
-This file can be found in the [supporting_data](https://github.com/fakedrtom/SVAFotate/tree/master/supporting_data)
-folder. The BED file was compiled using information gathered from the publicly available
-CCDG, gnomAD, and 1000G SV callsets. AF related data (including HOM_REF, HET,
+This file can be found [here](https://zenodo.org/records/11642574) while 
+previous versions of similar data can be found in the [supporting_data](https://github.com/fakedrtom/SVAFotate/tree/master/supporting_data) 
+directory. The BED file was compiled using information gathered from the publicly available
+CCDG, gnomAD, 1000G, and TOPMed SV callsets. AF related data (including HOM_REF, HET,
 and HOM_ALT genotype counts, where available), were parsed from these into a single BED
-file. CCDG and 1000G data were provided with GRCh38 alignments, but gnomAD data
-was generated using GRCh37 alignments. These have been converted to GRCh38 using
-[UCSC's command-line liftover tool](https://genome.ucsc.edu/cgi-bin/hgLiftOver). The recent 
-gnomAD v4 dataset inlcudes SV calls derived from GRCh38, and a BED from these SVs has 
-been made available, called:
-
-```
-gnomad.v4.bed.gz
-```
-
-This can also be used as an input BED for SVAFotate, but please note that currently the expanded 
-populations have not been fully integrated into SVAFotate so not all annotation options are 
-available. I hope to update this soon for a future SVAFotate version.
-
-A different BED file could be used or customized, or user-specific data could be added to the
-provided BED file, but please note that SVAFotate expects specific columns, their header
-names, and their order placement to be present in the BED file. If a different BED
-file is used or additional data is added to the provided BED, please ensure that
-it follows the same ordering and column information as found in `SVAFotate_core_SV_popAFs.GRCh38.bed.gz`.
-As a minimum, it is necessary that any other BED file used or other data added to this provided
+file. All of these data were prepared from GRCh38 alignments. A different BED file could 
+be used or customized, user-specific data could be added to the provided BED file, but 
+please note that SVAFotate expects specific columns, their header names, and their order 
+placement to be present in the BED file. If a different BED file is used or additional 
+data is added to the provided BED, please ensure that it follows the same ordering and 
+column information as found in `SVAFotate_core_SV_popAFs.GRCh38.v4.1.bed.gz`. As a minimum, 
+it is necessary that any other BED file used or other data added to this provided
 BED file include: CHROM, START, END, SVLEN, SVTYPE, SOURCE, SV_ID, and AF. 
 Please note that all other columns do *not* need to be populated with actual data and where
-data is unavailable an 'NA' is recommended.
+data is unavailable an 'NA' should be added.
 
-Thanks to Adam English and the Sedlazeck lab, SV calls from TOPMed have been added to 
-SVAFotate. These calls can be found the BED file named:
-
-```
-TOPMed.GRCH38.bed.gz
-```
-
+**CURRENTLY UNAVAILABLE**: 
 A serialized pickle object of the BED file can be used in place of the BED file (`-p`).
 This may result in faster performance when using the SVAFotate `annotate` subcommand.
 Included with SVAFotate is the subcommand [pickle-source](https://github.com/fakedrtom/SVAFotate#pickle-source)
@@ -271,8 +257,8 @@ for `-f` is, but a minimum of 0.5 should be a decent starting value to consider.
 
 The required BED file for running the `annotate` subcommand may contain SV data from multiple
 datasets. The `SOURCE` column in this BED file refers to the data source for the given SVs. For
-example, the supplied `SVAFotate_core_SV_popAFs.GRCh38.bed.gz` file contains SVs from the CCDG,
-gnomAD, and 1000G dataset sources. By default SVAFotate will consider all SVs in the BED file for
+example, the supplied `SVAFotate_core_SV_popAFs.GRCh38.v4.1.bed.gz` file contains SVs from the CCDG,
+gnomAD, 1000G, and TOPMed dataset sources. By default SVAFotate will consider all SVs in the BED file for
 determining potential matches (and can report metrics specifc to each source). If annotations
 based on comparisons with select sources only is desired, the `-s` parameter will reduce the
 considered SVs from the BED file to only those belonging to the requested sources. A single
@@ -345,10 +331,10 @@ will also be included for those annotations.
 
 ***pops***
 
-The including BED file `SVAFotate_core_SV_popAFs.GRCh38.bed.gz` contains data from gnomAD and
-1000G which both include population specific metrics belonging to the following populations:
-AFR, AMR, EAS, EUR, OTH, and SAS. The `pops` choice will add the following annotations for all
-populations:
+The suggested BED file `SVAFotate_core_SV_popAFs.GRCh38.v4.1.bed.gz` contains data from gnomAD, 1000G, 
+and TOPMed which include population specific metrics belonging to the following populations:
+AFR, AMI, AMR, ASJ, EAS, EUR, FIN, MID, NFE, OTH, and SAS. The `pops` choice will add the 
+following annotations for all populations:
 
 ```
 Max_[population]_AF	    The maximum population AF from all matching SVs across all specified data sources
@@ -524,11 +510,16 @@ genomic coordinates when using the `-f` option for requiring reciprocal overlaps
   --cpu CPU Count       The number of cpus to use for multi-threading (Default = 1).
 ```
 
-SVAFotate may use additional cpus for multi-threading purposes which can be designated using
-the `--cpu` option.
+**Currently experiencing technical difficulties; mileage may vary** 
+
+SVAFotate may use additional cpus for multi-threading purposes which can be 
+designated using the `--cpu` option.
 
 pickle-source
 ------------------------
+**Please note that pickle-sources are currently unavaible for use with `annotate`; `pickle-source` 
+should still work, but its application with `annotate` may render this less useful for now** 
+
 Since SVAFotate may be used repeatedly on different SV VCFs with the same BED file, it
 may be advantageous to create a pickle object of the BED file to improve SVAFotate's
 performance when running the `annotate` subcommand. This is optional. If SVAFotate or
@@ -537,7 +528,7 @@ of that BED file is probably not necessary. Nevertheless, creating a pickle obje
 of a BED file is straightforward and can be accomplished with the following command:
 
 ```
-svafotate pickle-source --bed SVAFotate_core_SV_popAFs.GRCh38.bed.gz --out SVAFotate_core_SV_popAFs.GRCh38.pickle
+svafotate pickle-source --bed SVAFotate_core_SV_popAFs.GRCh38.v4.1.bed.gz --out SVAFotate_core_SV_popAFs.GRCh38.v4.1.pickle
 ```
 
 custom-annotation
